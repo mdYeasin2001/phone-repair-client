@@ -1,0 +1,8 @@
+.header {
+  background: 
+    url("../../../images/hit-phone.jpg") no-repeat;
+  background-size: cover;
+  height: 130vh;
+  clip-path: polygon(0 0, 100% 0, 100% 38%, 21% 100%, 0 56%);
+  
+}
