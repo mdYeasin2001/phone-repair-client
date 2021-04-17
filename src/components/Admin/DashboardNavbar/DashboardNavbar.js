@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AdminNavbar = () => {
+const DashboardNavbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -10,11 +10,14 @@ const AdminNavbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav mx-auto">
+                    <div className="navbar-nav ms-auto">
                         <Link className="nav-link" to="/admin/orders">Order List</Link>
                         <Link className="nav-link" to="/admin/addServices">Add Services</Link>
                         <Link className="nav-link" to="/admin/makeAdmin">Make Admin</Link>
                         <Link className="nav-link" to="/admin/manage">Manage Services</Link>
+                        <Link className="nav-link" to="/book">Book</Link>
+                        <Link className="nav-link" to="/bookList">Book List</Link>
+                        <Link className="nav-link" to="/review">Review</Link>
                     </div>
                 </div>
             </div>
@@ -22,4 +25,4 @@ const AdminNavbar = () => {
     );
 };
 
-export default AdminNavbar;
+export default DashboardNavbar;

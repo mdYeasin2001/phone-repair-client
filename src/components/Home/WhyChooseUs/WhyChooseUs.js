@@ -25,7 +25,7 @@ const WhyChooseUs = () => {
     return (
         <section className="container py-5">
             <div className="text-center pb-5">
-                <p className="lead text-uppercase fw-normal text-muted">fastest repair service</p>
+                <p className="lead text-uppercase fw-normal text-muted text-center">fastest repair service</p>
                 <h3 className="display-5"><span className="text-martinique fw-bold">Why Choose</span> <span className="text-mountain fw-normal">Us</span></h3>
             </div>
             <div className="row row-cols-1 row-cols-md-3 g-4">

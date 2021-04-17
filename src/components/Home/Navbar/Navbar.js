@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../../App';
+import { HiUserCircle } from 'react-icons/hi';
 
 const Navbar = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container">
@@ -17,7 +20,14 @@ const Navbar = () => {
                         <a className="nav-link" href="#">Contact</a>
                         <Link className="nav-link" to="/admin/orders">Admin</Link>
                     </div>
-                    <Link to="/login"><button className="btn-brand">Login</button></Link>
+                    {loggedInUser.email ?
+                        <>
+                            <a className="fw-bold nav-link text-martinique" href="#"><HiUserCircle className="fs-3 me-2"/>{loggedInUser.name}</a>
+                            <button className="btn-brand d-block">Log out</button>
+                        </>
+                        :
+                        <Link to="/login"><button className="btn-brand d-block">Login</button></Link>
+                    }
                 </div>
             </div>
         </nav>

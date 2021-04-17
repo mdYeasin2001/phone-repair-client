@@ -36,7 +36,7 @@ const Faq = () => {
 
         <section className="container py-5">
             <div className="text-center pb-5">
-                <p className="lead text-uppercase fw-normal text-muted">Don’t be afraid to ask!</p>
+                <p className="lead text-uppercase fw-normal text-muted text-center">Don’t be afraid to ask!</p>
                 <h3 className="display-5"><span className="text-martinique fw-bold">Frequently Asked</span> <span className="text-mountain fw-normal">Questions</span></h3>
             </div>
             <div className="row row-cols-1 row-cols-md-2 g-4">
