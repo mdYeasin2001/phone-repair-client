@@ -12,6 +12,8 @@ import { createContext, useState } from "react";
 import Review from "./components/UserDashboard/Review/Review";
 import BookList from "./components/UserDashboard/BookList/BookList";
 import Book from "./components/UserDashboard/Book/Book";
+import ManageOrders from "./components/Admin/ManageOrders/ManageOrders";
+import ManageServices from "./components/Admin/ManageServices/ManageServices";
 
 export const UserContext = createContext();
 
@@ -30,30 +32,36 @@ function App() {
           </Route>
           <PrivateRoute path="/admin/orders">
             <DashboardNavbar />
+            <ManageOrders />
           </PrivateRoute>
-          <Route path="/admin/addServices">
+          <PrivateRoute path="/admin/addServices">
             <DashboardNavbar />
             <AddService />
-          </Route>
-          <Route path="/admin/makeAdmin">
+          </PrivateRoute>
+          <PrivateRoute path="/admin/makeAdmin">
             <DashboardNavbar />
             <MakeAdmin />
-          </Route>
-          <Route path="/admin/manage">
+          </PrivateRoute>
+          <PrivateRoute path="/admin/manage">
             <DashboardNavbar />
-          </Route>
-          <Route path="/book/:id">
+            <ManageServices />
+          </PrivateRoute>
+          <PrivateRoute exact path="/book">
             <DashboardNavbar />
             <Book />
-          </Route>
-          <Route path="/bookList">
+          </PrivateRoute>
+          <PrivateRoute path="/book/:id">
+            <DashboardNavbar />
+            <Book />
+          </PrivateRoute>
+          <PrivateRoute path="/bookList">
             <DashboardNavbar />
             <BookList />
-          </Route>
-          <Route path="/review">
+          </PrivateRoute>
+          <PrivateRoute path="/review">
             <DashboardNavbar />
             <Review />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
     </UserContext.Provider>

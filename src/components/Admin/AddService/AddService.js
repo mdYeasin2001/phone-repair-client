@@ -38,7 +38,7 @@ const AddService = () => {
 
     return (
         <div className="container py-5">
-            <h1 className="text-mountain pb-3 text-center">Add Services</h1>
+            <h1 className="text-martinique pb-3 text-center">Add Services</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row row-cols-1 row-cols-md-2 bg-light p-4 gx-4 rounded shadow">
 
@@ -66,7 +66,7 @@ const AddService = () => {
                     </div>
 
                 </div>
-                <input className={`btn btn-success ms-auto d-block mt-3 ${imageURL ? '' : 'disabled'}`} value="ADD SERVICE" type="submit" />
+                <input className={`btn btn-success bg-martinique ms-auto d-block mt-3 ${imageURL ? '' : 'disabled'}`} value="ADD SERVICE" type="submit" />
             </form>
         </div>
     );

@@ -1,8 +1,14 @@
 .text-martinique{
   color: #3F3A64 !important;
 }
+.bg-martinique{
+  background: #3F3A64 !important;
+}
 .text-mountain{
   color: #20AD96;
+}
+.bg-mountain{
+  background: #20AD96;
 }
 .btn-brand{
   padding: .375rem 2rem;
@@ -13,9 +19,11 @@
   border-radius: 3px;
   font-size: 15px;
   transition: all .5s;
+  text-decoration: none;
 }
 .btn-brand:hover{
   background: #3F3A64;
+  color: #fff;
 }
 p{
   text-align: justify;

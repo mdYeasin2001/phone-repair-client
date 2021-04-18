@@ -1,8 +1,11 @@
 .header {
-  background: 
-    url("../../../images/hit-phone.jpg") no-repeat;
+  background: linear-gradient(
+      rgba(187, 187, 187, 0.5),
+      rgba(187, 187, 187, 0.5),
+      rgba(187, 187, 187, 0.5),
+      rgba(187, 187, 187, 0.5)
+    ),
+    url("../../../images/banner.jpg") no-repeat;
   background-size: cover;
-  height: 130vh;
-  clip-path: polygon(0 0, 100% 0, 100% 38%, 21% 100%, 0 56%);
-  
+  height: 100vh;
 }

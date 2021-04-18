@@ -3,7 +3,7 @@ import about from '../../../images/about.jpg';
 
 const About = () => {
     return (
-        <section id="about" className="container py-5">
+        <section id="about-area" className="container py-5">
             <div className="row">
                 <div className="col">
                     <div className="card border-0">
@@ -17,7 +17,7 @@ const About = () => {
                                     most damaged device. We thrive in delivering quality of service to all our
                                     customers.</p>
                                     
-                                    <button className="btn-brand">View Services</button>
+                                    <a className="btn-brand" href="#services-area">View Services</a>
                                 </div>
                             </div>
                             <div className="col-md-6">

@@ -25,8 +25,9 @@ const Login = () => {
             .signInWithPopup(provider)
             .then((result) => {
                 // sing in with google
-                const { displayName, email } = result.user;
-                setLoggedInUser({ name: displayName, email });
+                
+                const { displayName, email, photoURL } = result.user;
+                setLoggedInUser({ name: displayName, email, image: photoURL });
                 history.replace(from);
             }).catch((error) => {
                 // Handle Errors here.

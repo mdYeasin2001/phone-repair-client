@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
     CardElement,
@@ -7,6 +7,8 @@ import {
     useStripe
 } from "@stripe/react-stripe-js";
 import "./Book.css";
+import { useParams } from "react-router";
+import { UserContext } from '../../../App';
 
 const CARD_OPTIONS = {
     iconStyle: "solid",
@@ -91,32 +93,31 @@ const ErrorMessage = ({ children }) => (
     </div>
 );
 
-const ResetButton = ({ onClick }) => (
-    <button type="button" className="ResetButton book-btn" onClick={onClick}>
-        <svg width="32px" height="32px" viewBox="0 0 32 32">
-            <path
-                fill="#FFF"
-                d="M15,7.05492878 C10.5000495,7.55237307 7,11.3674463 7,16 C7,20.9705627 11.0294373,25 16,25 C20.9705627,25 25,20.9705627 25,16 C25,15.3627484 24.4834055,14.8461538 23.8461538,14.8461538 C23.2089022,14.8461538 22.6923077,15.3627484 22.6923077,16 C22.6923077,19.6960595 19.6960595,22.6923077 16,22.6923077 C12.3039405,22.6923077 9.30769231,19.6960595 9.30769231,16 C9.30769231,12.3039405 12.3039405,9.30769231 16,9.30769231 L16,12.0841673 C16,12.1800431 16.0275652,12.2738974 16.0794108,12.354546 C16.2287368,12.5868311 16.5380938,12.6540826 16.7703788,12.5047565 L22.3457501,8.92058924 L22.3457501,8.92058924 C22.4060014,8.88185624 22.4572275,8.83063012 22.4959605,8.7703788 C22.6452866,8.53809377 22.5780351,8.22873685 22.3457501,8.07941076 L22.3457501,8.07941076 L16.7703788,4.49524351 C16.6897301,4.44339794 16.5958758,4.41583275 16.5,4.41583275 C16.2238576,4.41583275 16,4.63969037 16,4.91583275 L16,7 L15,7 L15,7.05492878 Z M16,32 C7.163444,32 0,24.836556 0,16 C0,7.163444 7.163444,0 16,0 C24.836556,0 32,7.163444 32,16 C32,24.836556 24.836556,32 16,32 Z"
-            />
-        </svg>
-    </button>
-);
+
 
 const CheckoutForm = () => {
+    const { id } = useParams();
+    const [loggedInUser] = useContext(UserContext);
+    const [service, setServices] = useState([]);
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);
     const [cardComplete, setCardComplete] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState(null);
-    const [billingDetails, setBillingDetails] = useState({
-        email: "",
-        phone: "",
-        name: "dfdf"
-    });
+    const [booked, setBooked] = useState(false);
+    console.log(booked);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/services/${id}`)
+            .then(res => res.json())
+            .then(data => setServices(data))
+    }, [id]);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         if (!stripe || !elements) {
             // Stripe.js has not loaded yet. Make sure to disable
             // form submission until Stripe.js has loaded.
@@ -135,7 +136,7 @@ const CheckoutForm = () => {
         const payload = await stripe.createPaymentMethod({
             type: "card",
             card: elements.getElement(CardElement),
-            billing_details: billingDetails
+            billing_details: { name: loggedInUser.name, email: loggedInUser.email }
         });
 
         setProcessing(false);
@@ -145,23 +146,31 @@ const CheckoutForm = () => {
         } else {
             setPaymentMethod(payload.paymentMethod);
         }
-        console.log(billingDetails, payload.paymentMethod);
 
-
+        console.log(service, payload.paymentMethod);
+        if (service.length && payload.paymentMethod) {
+            const bookingData = { date: new Date(), email: loggedInUser.email, name: loggedInUser.name, status: "Pending", service: service, payment: payload.paymentMethod };
+            fetch('http://localhost:5000/bookService', {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(bookingData)
+            })
+                .then(res => res.json())
+                .then(data => setBooked(data))
+        }else if(service.length === 0){
+            alert('Please choose your service first!!')
+        }
+        
     };
 
     const reset = () => {
         setError(null);
         setProcessing(false);
         setPaymentMethod(null);
-        setBillingDetails({
-            email: "",
-            phone: "",
-            name: ""
-        });
+
     };
 
-    return paymentMethod ? (
+    return paymentMethod && service.length > 0 ? (
         <div className="Result">
             <div className="ResultTitle" role="alert">
                 Payment successful
@@ -170,82 +179,71 @@ const CheckoutForm = () => {
                 Thanks for trying Stripe Elements. No money was charged, but we
         generated a PaymentMethod: {paymentMethod.id}
             </div>
-            <ResetButton onClick={reset} />
         </div>
     ) : (
-        <form className="Form" onSubmit={handleSubmit}>
-            <fieldset className="FormGroup">
-                <Field
-                    label="Name"
-                    id="name"
-                    type="text"
-                    placeholder="Jane Doe"
-                    required
-                    autoComplete="name"
-                    value={billingDetails.name}
-                    onChange={(e) => {
-                        setBillingDetails({ ...billingDetails, name: e.target.value });
-                    }}
-                />
-                <Field
-                    label="Email"
-                    id="email"
-                    type="email"
-                    placeholder="janedoe@gmail.com"
-                    required
-                    autoComplete="email"
-                    value={billingDetails.email}
-                    onChange={(e) => {
-                        setBillingDetails({ ...billingDetails, email: e.target.value });
-                    }}
-                />
-                <Field
-                    label="Phone"
-                    id="phone"
-                    type="tel"
-                    placeholder="(941) 555-0123"
-                    required
-                    autoComplete="tel"
-                    value={billingDetails.phone}
-                    onChange={(e) => {
-                        setBillingDetails({ ...billingDetails, phone: e.target.value });
-                    }}
-                />
-            </fieldset>
-            <fieldset className="FormGroup">
-                <CardField
-                    onChange={(e) => {
-                        setError(e.error);
-                        setCardComplete(e.complete);
-                    }}
-                />
-            </fieldset>
-            {error && <ErrorMessage>{error.message}</ErrorMessage>}
-            <SubmitButton processing={processing} error={error} disabled={!stripe}>
-                Pay $25
-      </SubmitButton>
-        </form>
+        <>
+            <form className="Form" onSubmit={handleSubmit}>
+                <fieldset className="FormGroup">
+                    <Field
+                        label="Name"
+                        id="name"
+                        type="text"
+                        placeholder="Jane Doe"
+                        required
+                        autoComplete="name"
+                        value={loggedInUser.name}
+
+                    />
+                    <Field
+                        label="Email"
+                        id="email"
+                        type="email"
+                        placeholder="janedoe@gmail.com"
+                        required
+                        autoComplete="email"
+                        value={loggedInUser.email}
+
+                    />
+                    <Field
+                        label="Service"
+                        id="service"
+                        type="text"
+                        placeholder="Service..."
+                        required
+                        autoComplete="service"
+                        value={service[0]?.title}
+
+                    />
+                </fieldset>
+                <fieldset className="FormGroup">
+                    <CardField
+                        onChange={(e) => {
+                            setError(e.error);
+                            setCardComplete(e.complete);
+                        }}
+                    />
+                </fieldset>
+                {error && <ErrorMessage>{error.message}</ErrorMessage>}
+                <SubmitButton processing={processing} error={error} disabled={!stripe}>
+                    Pay ${service[0]?.serviceCharge}
+                </SubmitButton>
+            </form>
+            <p className="lead ms-3 pt-4">You will be charged <span className="fw-bold">${service[0]?.serviceCharge}</span></p>
+        </>
     );
 };
 
-const ELEMENTS_OPTIONS = {
-    fonts: [
-        {
-            cssSrc: "https://fonts.googleapis.com/css?family=Roboto"
-        }
-    ]
-};
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
+const stripePromise = loadStripe("pk_test_51IeGIpFELZiUksbUXEU21DefZk6ed5nJfHX2mJyP6hocBB0h7XCb75Pyt1GEpyMEriymMzA7D3C5moePaWCq1viT00lKU8LQrr");
 
 const Book = () => {
     return (
         <div className="row">
-            <div className="col-md-6 offset-md-3 mt-5 bg-dark">
-                <div className="AppWrapper">
-                    <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+            <div className="col-md-5 mx-auto pt-5">
+                <div className="AppWrapper ms-md-3">
+                    <Elements stripe={stripePromise}>
                         <CheckoutForm />
                     </Elements>
                 </div>

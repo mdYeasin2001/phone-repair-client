@@ -10,7 +10,7 @@ const Services = () => {
         .then(data => setServices(data));
     }, [])
     return (
-        <section className="container py-5">
+        <section id="services-area" className="container py-5">
             <div className="text-center pb-5">
                 <p className="lead text-uppercase fw-normal text-muted text-center">How We Can Help</p>
                 <h3 className="display-5"><span className="text-martinique fw-bold">Our</span> <span className="text-mountain fw-normal">Services</span></h3>

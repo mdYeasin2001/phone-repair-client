@@ -1,0 +1,10 @@
+.service-card{
+    cursor: pointer;
+}
+.service-card:hover img{
+    transform:scale(.9);
+    opacity: 0.4;
+}
+.service-card img{
+    transition: 1s;
+}

@@ -44,7 +44,7 @@ const Faq = () => {
             </div>
             <div className="text-center">
                 <button className="btn-brand mx-1">All FAQ</button>
-                <button className="btn-brand mx-1">Fix My Device</button>
+                <a className="btn-brand mx-1" href="#services-area">Fix My Device</a>
             </div>
         </section>
     );

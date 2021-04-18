@@ -18,7 +18,7 @@ const Trusted = () => {
                                     <p className="card-text text-muted">Here at PhoneRepair we repair hundreds of devices a month, so rest assured you’re in safe hands sending your devices to us for repair.</p>
                                     <p className="card-text text-muted">PhoneRepair are capable of repairing any electronic device on the market now and those manufactured in the last 10 years. We have all the right tools for the job so we can open up your device, repair it and assemble it all back together without ever knowing it had been touched.</p>
 
-                                    <button className="btn-brand">View Reviews</button>
+                                    <a className="btn-brand" href="#testimonial-area">View Reviews</a>
                                 </div>
                             </div>
                         </div>
