@@ -7,7 +7,7 @@ const AddService = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         const serviceData = { title: data.title, img: imageURL, serviceCharge: data.charge, description: data.description }
-        fetch('http://localhost:5000/addService', {
+        fetch('https://morning-caverns-70886.herokuapp.com/addService', {
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify(serviceData)

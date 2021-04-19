@@ -109,7 +109,7 @@ const CheckoutForm = () => {
     console.log(booked);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/services/${id}`)
+        fetch(`https://morning-caverns-70886.herokuapp.com/services/${id}`)
             .then(res => res.json())
             .then(data => setServices(data))
     }, [id]);
@@ -147,10 +147,10 @@ const CheckoutForm = () => {
             setPaymentMethod(payload.paymentMethod);
         }
 
-        console.log(service, payload.paymentMethod);
+        // console.log(service, payload.paymentMethod);
         if (service.length && payload.paymentMethod) {
             const bookingData = { date: new Date(), email: loggedInUser.email, name: loggedInUser.name, status: "Pending", service: service, payment: payload.paymentMethod };
-            fetch('http://localhost:5000/bookService', {
+            fetch('https://morning-caverns-70886.herokuapp.com/bookService', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(bookingData)

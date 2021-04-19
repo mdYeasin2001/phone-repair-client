@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 const MakeAdmin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-        fetch('http://localhost:5000/makeAdmin', {
+        fetch('https://morning-caverns-70886.herokuapp.com/makeAdmin', {
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify(data)

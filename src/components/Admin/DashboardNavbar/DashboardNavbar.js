@@ -7,7 +7,7 @@ const DashboardNavbar = () => {
     const [loggedInUser] = useContext(UserContext);
     const [admin, setAdmin] = useState(false);
     useEffect(() => {
-        fetch('http://localhost:5000/userRole', {
+        fetch('https://morning-caverns-70886.herokuapp.com/userRole', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ email: loggedInUser.email })
@@ -32,7 +32,7 @@ const DashboardNavbar = () => {
                                 <Link className="nav-link mx-3" to="/admin/manage">Manage Services</Link>
                             </>
                         }
-                        {admin &&
+                        {!admin &&
                             <>
                                 <Link className="nav-link mx-3" to="/book">Book</Link>
                                 <Link className="nav-link mx-3" to="/bookList">Book List</Link>

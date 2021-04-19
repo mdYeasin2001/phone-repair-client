@@ -19,7 +19,7 @@ const Navbar = () => {
           });
     }
     useEffect(() => {
-        fetch('http://localhost:5000/userRole', {
+        fetch('https://morning-caverns-70886.herokuapp.com/userRole', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ email: loggedInUser.email })

@@ -5,7 +5,7 @@ const ManageServicesItem = ({service}) => {
     const [deleted, setDeleted] = useState(false);
 
     const DeleteService = (id) => {
-        fetch(`http://localhost:5000/deleteService/${id}`, {
+        fetch(`https://morning-caverns-70886.herokuapp.com/deleteService/${id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())

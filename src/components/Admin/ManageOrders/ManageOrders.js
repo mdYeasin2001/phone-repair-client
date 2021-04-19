@@ -7,10 +7,10 @@ const ManageOrders = () => {
     const [orders, setOrders] = useState([]);
     const [statusUpdated, setStatusUpdated] = useState(false);
     const [loading, setLoading] = useState(true);
-    console.log(statusUpdated);
+    // console.log(statusUpdated);
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders', {
+        fetch('https://morning-caverns-70886.herokuapp.com/orders', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ email: loggedInUser.email })

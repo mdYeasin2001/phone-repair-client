@@ -7,7 +7,7 @@ const BookList = () => {
     const [bookList, setBookList] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        fetch(`http://localhost:5000/bookList/${loggedInUser.email}`)
+        fetch(`https://morning-caverns-70886.herokuapp.com/bookList/${loggedInUser.email}`)
             .then(res => res.json())
             .then(data => {
                 setBookList(data);

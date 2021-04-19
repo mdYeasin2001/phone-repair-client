@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 const Order = ({ order, setStatusUpdated }) => {
     const { name, email, status, _id } = order;
     const [updateBooking, setUpdateBooking] = useState({});
-    console.log(updateBooking);
+    // console.log(updateBooking);
     useEffect(() => {
-        fetch('http://localhost:5000/updateBooking', {
+        fetch('https://morning-caverns-70886.herokuapp.com/updateBooking', {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updateBooking)

@@ -7,7 +7,7 @@ const ManageServices = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        fetch('http://localhost:5000/manageServices', {
+        fetch('https://morning-caverns-70886.herokuapp.com/manageServices', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ email: loggedInUser.email })
